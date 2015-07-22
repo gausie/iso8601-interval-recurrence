@@ -1,6 +1,8 @@
 iso8601-range
 =============
 
+[![Build Status](https://travis-ci.org/gausie/iso8601-range.svg?branch=develop)](https://travis-ci.org/gausie/iso8601-range)
+
 This small library allows you tocheck if a date is within a range. Support includes repeating ranges using the ISO 8601 standards of Durations and Repeating Intervals.
 
 This can be supplied a range with describes a duration at a repeating interval (for example between 9:15 and 4 every other Thursday) and can tell you if a date falls within one of those ranges.

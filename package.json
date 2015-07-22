@@ -1,6 +1,6 @@
 {
   "name": "iso8601-range",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Date range checker including durations at repeating intervals as specified in ISO8601.",
   "main": "./dist/index.js",
   "directories": {

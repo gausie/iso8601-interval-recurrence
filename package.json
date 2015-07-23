@@ -1,7 +1,7 @@
 {
-  "name": "iso8601-range",
+  "name": "iso8601-interval-recurrence",
   "version": "2.0.0",
-  "description": "Date range checker including durations at repeating intervals as specified in ISO8601.",
+  "description": "Library to check whether dates occur within recurring intervals specified usin strict ISO8601.",
   "main": "./dist/index.js",
   "directories": {
     "test": "test"
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gausie/iso8601-range.git"
+    "url": "git+https://github.com/gausie/iso8601-interval-recurrence.git"
   },
   "keywords": [
     "iso8601",
@@ -31,7 +31,7 @@
   "author": "Gausie",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gausie/iso8601-range/issues"
+    "url": "https://github.com/gausie/iso8601-interval-recurrence/issues"
   },
-  "homepage": "https://github.com/gausie/iso8601-range#readme"
+  "homepage": "https://github.com/gausie/iso8601-interval-recurrence#readme"
 }

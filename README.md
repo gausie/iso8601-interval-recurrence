@@ -1,6 +1,6 @@
 
-iso8601-range
-=============
+iso8601-interval-recurrence
+===========================
 
 [![Build Status](https://travis-ci.org/gausie/iso8601-range.svg?branch=master)](https://travis-ci.org/gausie/iso8601-range)
 
@@ -12,7 +12,7 @@ Usage
 -----
 
 ```
-var iso8601range = require('iso8601-range');
+var interval_recurrence = require('iso8601-interval-recurrence');
 
 var range = {
     interval: '2015-07-22T00:00:00.000Z/P1D',
@@ -22,8 +22,8 @@ var range = {
 var wednesday = '2015-07-29T13:00:00.000Z';
 var tuesday = '2015-07-23T11:12:13.000Z';
 
-iso8601range(range, wednesday); // true
-iso8601range(range, tuesday);   // false
+interval_recurrence(range, wednesday); // true
+interval_recurrence(range, tuesday);   // false
 ```
 
 Although I will write some more documentation later, for now you can see the unit testing to determine how to use it.
@@ -32,3 +32,5 @@ See Also
 --------
 
 The guys over at cylc [seemed to have the same problem](https://github.com/cylc/cylc/wiki/ISO-8601) but came up with a complicated and extremely confusing solution.
+
+I worked on this with [Joshua Finch](https://github.com/joshuafinch), who has published [an equivalent library for iOS](https://github.com/joshuafinch/ISO-8601-Interval-Recurrence).

@@ -44,7 +44,7 @@ exports['follow number of recurrences'] = function () {
 };
 
 exports['check between two specific dates'] = function () {
-	// Matches every Wednesday for two weeks
+	// Matches between midnight and midday on a specific day.
 	var range = {
 		interval: '2015-07-22T00:00:00.000Z/2015-07-22T12:00:00.000Z',
 	};

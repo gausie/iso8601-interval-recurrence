@@ -60,10 +60,15 @@ export default class IntervalRecurrence {
 
 		var timeBeforeStart = moment.duration(this.recurrence.interval).asMilliseconds() * whichRecurrence;
 
-		var start = moment(this.interval.date).add(timeBeforeStart, 'milliseconds');
-		var end = start.add(moment.duration(this.interval.interval));
+		// Note that we need to clone these moments because they are mutable.
+		var start = this.interval.date.clone().add(timeBeforeStart, 'milliseconds');
+		var end = start.clone().add(this.interval.interval);
 
-		return { start, end };
+		// We return them as JavaScript Dates for library interoperability.
+		return {
+			start: start.toDate(),
+			end: end.toDate()
+		};
 	}
 
 	_calculateRecurrence (date) {

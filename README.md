@@ -12,18 +12,20 @@ Usage
 -----
 
 ```
-var interval_recurrence = require('iso8601-interval-recurrence');
+var IntervalRecurrence = require('iso8601-interval-recurrence');
 
 var range = {
     interval: '2015-07-22T00:00:00.000Z/P1D',
     recurrence: 'R/P1W'
 };
 
+var every_wednesday = IntervalRecurrence(range);
+
 var wednesday = '2015-07-29T13:00:00.000Z';
 var tuesday = '2015-07-23T11:12:13.000Z';
 
-interval_recurrence(range, wednesday); // true
-interval_recurrence(range, tuesday);   // false
+every_wednesday.containsDate(wednesday); // true
+every_wednesday.containsDate(tuesday);   // false
 ```
 
 Although I will write some more documentation later, for now you can see the unit testing to determine how to use it.

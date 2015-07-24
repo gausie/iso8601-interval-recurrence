@@ -104,7 +104,11 @@ export default class IntervalRecurrence {
 
 	_parseISO8601 (date) {
 		// Split the date string by slashes.
-		date = date.split('/');
+		try {
+			date = date.split('/');
+		} catch (e) {
+			return false;
+		}
 
 		// Begin the object that we will return with the constitutent parts.
 		var dateObject = {};
@@ -127,13 +131,12 @@ export default class IntervalRecurrence {
 		}
 
 		// If we have a zero length array, it's only ok if there has been a
-		// zero recurrence.
+		// recurrence. We technically want this to be a recurrence of zero,
+		// but that is done in the constructor instead of here as a solo
+		// recurrence that does not equal zer0 may be of some meaning to
+		// other applicatons of this parsing function.
 		if (date.length === 0) {
-			if (dateObject.recurrence === 0) {
-				return dateObject;
-			} else {
-				return false;
-			}
+			return dateObject;
 		}
 
 		// Make some prelimiary determinations about the first index of the array.
@@ -152,7 +155,7 @@ export default class IntervalRecurrence {
 
 			if (isDate0 && isDate1) {
 				// If they are both valid dates...
-				if (date.recurrence) {
+				if (dateObject.recurrence !== undefined) {
 					// ... with a repetition that is invalid.
 					return false;
 				} else {

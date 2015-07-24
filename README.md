@@ -2,7 +2,7 @@
 iso8601-interval-recurrence
 ===========================
 
-[![Build Status](https://travis-ci.org/gausie/iso8601-range.svg?branch=master)](https://travis-ci.org/gausie/iso8601-range)
+[![Build Status](https://travis-ci.org/gausie/iso8601-interval-recurrence.svg?branch=master)](https://travis-ci.org/gausie/iso8601-range)
 
 This small library allows you tocheck if a date is within a range. Support includes repeating ranges using the ISO 8601 standards of Durations and Repeating Intervals.
 

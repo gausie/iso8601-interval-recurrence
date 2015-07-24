@@ -12,7 +12,7 @@ describe('iso8601-interval-recurrence', function () {
 	it('should be able to check a date against a start date and interval', function () {
 		// Matches every Wednesday
 		var every_wednesday = new IntervalRecurrence({
-			interval: '2015-07-22T00:00:00.000Z/P1D',
+			interval: '2015-W01-3T/P1D',
 			recurrence: 'R/P1W'
 		});
 
@@ -26,7 +26,7 @@ describe('iso8601-interval-recurrence', function () {
 	it('should be able to check a date against an interval and end date', function () {
 		// Matches every wednesday
 		var every_wednesday = new IntervalRecurrence({
-			interval: 'P1D/2015-07-23T00:00:00.000Z',
+			interval: 'P1D/2015-W01-4T',
 			recurrence: 'R/P1W'
 		});
 

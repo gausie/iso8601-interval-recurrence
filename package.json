@@ -12,10 +12,13 @@
   },
   "devDependencies": {
     "gulp": "^3.9.0",
-    "gulp-babel": "^5.1.0"
+    "gulp-babel": "^5.1.0",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
+    "source-map-support": "^0.3.2"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha"
+    "test": "node_modules/.bin/mocha --require source-map-support/register"
   },
   "repository": {
     "type": "git",

@@ -11,7 +11,7 @@ This can be supplied a range with describes a duration at a repeating interval (
 Usage
 -----
 
-```
+```js
 var IntervalRecurrence = require('iso8601-interval-recurrence');
 
 var range = {
@@ -19,7 +19,7 @@ var range = {
     recurrence: 'R/P1W'
 };
 
-var every_wednesday = IntervalRecurrence(range);
+var every_wednesday = new IntervalRecurrence(range);
 
 var wednesday = '2015-07-29T13:00:00.000Z';
 var tuesday = '2015-07-23T11:12:13.000Z';

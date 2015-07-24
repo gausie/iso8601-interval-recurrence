@@ -70,8 +70,8 @@ export default class IntervalRecurrence {
 		date = moment(date);
 
 		// Calculate what recurrence we are in.
-		var difference = date.diff(moment(this.interval.date));
-		var recurring_period = moment.duration(this.recurrence.interval).asMilliseconds();
+		var difference = date.diff(this.interval.date);
+		var recurring_period = (this.recurrence.interval !== undefined) ? this.recurrence.interval.asMilliseconds() : 0;
 
 		if (recurring_period === 0) {
 			recurring_period = Infinity;
@@ -86,14 +86,13 @@ export default class IntervalRecurrence {
 			// Check we're within allowed recurrences.
 			// An value of Infinity suggests that the recurrence interval is zero.
 			containsDate = false;
-		} else if (remainder > moment.duration(this.interval.interval).asMilliseconds()) {
+		} else if (remainder > this.interval.interval.asMilliseconds()) {
 			// Finally check whether we are in the interval for this recurrence.
 			containsDate = false;
 		} else {
 			// If we got here it must be true, right?
 			containsDate = true;
 		}
-
 
 		return { whichRecurrence, remainder, containsDate };
 	}
@@ -153,26 +152,24 @@ export default class IntervalRecurrence {
 					return false;
 				} else {
 					// ... we can turn the second date into a period.
-					var difference = date1.diff(date0);
-
-					dateObject.date = date[0];
-					dateObject.interval = moment.duration(difference).toJSON();
+					dateObject.date = date0;
+					dateObject.interval = moment.duration(date1.diff(date0));
 					return dateObject;
 				}
 			} else if (isDate0 && isInterval1) {
 				// If the first is a date and the second an interval, we have a basic
 				// ISO8601 interval with a start date.
-				dateObject.date = date[0];
-				dateObject.interval = date[1];
+				dateObject.date = date0;
+				dateObject.interval = moment.duration(date[1]);
 				return dateObject;
 			} else if (isInterval0 && isDate1) {
 				// If the first is an interval and the second is a date, we have a
 				// more complicated interval with an end date. However, we can just
 				// invert the sign on the interval and treat it like normal.
-				date1.subtract(moment.duration(date[0]));
+				var interval = moment.duration(date[0]);
 
-				dateObject.date = date1.toISOString();
-				dateObject.interval = date[0];
+				dateObject.date = date1.subtract(interval);
+				dateObject.interval = interval;
 				return dateObject;
 			} else {
 				// Any other form of a two-length array must be invalid.
@@ -192,7 +189,7 @@ export default class IntervalRecurrence {
 				}
 			} else if (isInterval0) {
 				// An interval on its own is valid, as is it with a repetition.
-				dateObject.interval = date[0];
+				dateObject.interval = moment.duration(date[0]);
 				return dateObject;
 			} else {
 				// All other formations are invalid.

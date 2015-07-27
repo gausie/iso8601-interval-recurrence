@@ -96,6 +96,17 @@ describe('IntervalRecurrence', function () {
 			}, exception);
 		});
 
+		it('should allow more lenient ISO8601 strings when strict is false', function () {
+			var exception = 'Invalid recurrence.';
+			assert.doesNotThrow(function () {
+				new IntervalRecurrence({
+					interval: '2015-01-01T/P1D',
+					recurrence: 'R/P1W',
+					strict: false
+				});
+			});
+		});
+
 	});
 
 	describe('#_parseISO8601', function () {
@@ -142,7 +153,7 @@ describe('IntervalRecurrence', function () {
 		it('should be able to check a date against a start date and interval', function () {
 			// Matches every Wednesday
 			var every_wednesday = new IntervalRecurrence({
-				interval: '2015-W01-3T/P1D',
+				interval: '2015-W01-3/P1D',
 				recurrence: 'R/P1W'
 			});
 
@@ -156,7 +167,7 @@ describe('IntervalRecurrence', function () {
 		it('should be able to check a date against an interval and end date', function () {
 			// Matches every wednesday
 			var every_wednesday = new IntervalRecurrence({
-				interval: 'P1D/2015-W01-4T',
+				interval: 'P1D/2015-W01-4',
 				recurrence: 'R/P1W'
 			});
 
@@ -202,7 +213,7 @@ describe('IntervalRecurrence', function () {
 
 			// Matches every weekend.
 			var weekend = new IntervalRecurrence({
-				interval: '2015-W01-6T/P2D',
+				interval: '2015-W01-6/P2D',
 				recurrence: 'R/P1W'
 			});
 

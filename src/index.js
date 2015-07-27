@@ -3,16 +3,15 @@
 import moment from 'moment';
 
 export default class IntervalRecurrence {
-	constructor (range) {
-		var { interval, recurrence } = range;
+	constructor ({ interval, recurrence, strict = true }) {
 
 		if (!recurrence) {
 			// A falsy recurrence value just means no recurrence.
 			recurrence = 'R0';
 		}
 
-		interval = this._parseISO8601(interval);
-		recurrence = this._parseISO8601(recurrence);
+		interval = this._parseISO8601(interval, strict);
+		recurrence = this._parseISO8601(recurrence, strict);
 
 		// Deal with various invalid inputs...
 
@@ -102,7 +101,7 @@ export default class IntervalRecurrence {
 		return { whichRecurrence, remainder, containsDate };
 	}
 
-	_parseISO8601 (date) {
+	_parseISO8601 (date, strict = true) {
 		// Split the date string by slashes.
 		try {
 			date = date.split('/');
@@ -142,15 +141,29 @@ export default class IntervalRecurrence {
 		// Make some prelimiary determinations about the first index of the array.
 		// Here we build a moment Object ahead of time, and check the validity of the
 		// first index as a date or interval.
-		var date0 = moment(date[0], moment.ISO_8601, true);
-		var isDate0 = date0.isValid();
+		var date0;
+		var isDate0;
+		try {
+			date0 = moment(date[0], moment.ISO_8601, strict);
+			isDate0 = date0.isValid();
+		} catch (e) {
+			date0 = false;
+			isDate0 = false;
+		}
 		var isInterval0 = (date[0].substring(0, 1) === 'P') && (moment.duration(date[0]) > 0);
 
 		if (date.length === 2) {
 			// If the lenght of the array is two, there is more to do. We make the same
 			// preliminary determinations about the second index.
-			var date1 = moment(date[1], moment.ISO_8601, true);
-			var isDate1 = date1.isValid();
+			var date1;
+			var isDate1;
+			try {
+				date1 = moment(date[1], moment.ISO_8601, strict);
+				isDate1 = date1.isValid();
+			} catch (e) {
+				date1 = false;
+				isDate1 = false;
+			}
 			var isInterval1 = (date[1].substring(0, 1) === 'P') && (moment.duration(date[1]) > 0);
 
 			if (isDate0 && isDate1) {

@@ -22,7 +22,7 @@
     "mocha": "^2.2.5"
   },
   "scripts": {
-    "test": "babel-node node_modules/.bin/isparta cover --report text --report html node_modules/.bin/_mocha -- -R spec && cat ./coverage/lcov.info | codecov && rm -rf ./coverage"
+    "test": "babel-node node_modules/.bin/isparta cover --report text --report lcov --report html node_modules/.bin/_mocha -- -R spec && cat ./coverage/lcov.info | codecov && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",

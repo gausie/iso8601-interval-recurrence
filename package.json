@@ -7,23 +7,22 @@
     "test": "test"
   },
   "dependencies": {
-    "mocha": "^2.2.5",
     "moment": "^2.10.3"
   },
   "devDependencies": {
     "babel": "^5.8.3",
     "chai": "^3.2.0",
     "chai-datetime": "^1.4.0",
+    "codecov.io": "^0.1.5",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
     "istanbul": "^0.3.17",
-    "istanbul-coveralls": "^1.0.3",
-    "source-map-support": "^0.3.2"
+    "mocha": "^2.2.5"
   },
   "scripts": {
-    "test": "istanbul cover _mocha --  --compilers js:babel/register && istanbul-coveralls"
+    "test": "istanbul cover _mocha -- --compilers js:babel/register -R spec && cat ./coverage/lcov.info | codecov && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",

@@ -47,6 +47,7 @@ export default class IntervalRecurrence {
 	}
 
 	containsDate (date) {
+		date = date || new Date();
 		return this._calculateRecurrence(date).containsDate;
 	}
 

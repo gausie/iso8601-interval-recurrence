@@ -2,6 +2,7 @@
 var chai = require('chai');
 chai.use(require('chai-datetime'));
 var assert = chai.assert;
+var moment = require('moment');
 
 // Import the library to test.
 var IntervalRecurrence = require('../src/');
@@ -149,6 +150,21 @@ describe('IntervalRecurrence', function () {
 	});
 
 	describe('#containsDate()', function () {
+
+		it('should choose the current date if no date is supplied', function () {
+			var surrounding_day = new IntervalRecurrence({
+				interval: moment().subtract(12, 'hours').toISOString() + '/P1D',
+				recurrence: 'R0'
+			});
+
+			var last_week = new IntervalRecurrence({
+				interval: moment().subtract(1, 'weeks').toISOString() + '/P1D',
+				recurrence: 'R0'
+			});
+
+			assert.equal(surrounding_day.containsDate(), true);
+			assert.equal(last_week.containsDate(), false);
+		});
 
 		it('should be able to check a date against a start date and interval', function () {
 			// Matches every Wednesday

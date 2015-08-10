@@ -42,16 +42,19 @@ export default class IntervalRecurrence {
 
 		this.interval = interval;
 		this.recurrence = recurrence;
+		this.date = new Date();
 		// When Babel supports it use:
 		// Object.assign(this, { interval, recurrence });
 	}
 
 	containsDate (date) {
-		date = date || new Date();
+		date = date || this.date;
 		return this._calculateRecurrence(date).containsDate;
 	}
 
 	currentRange (date) {
+		date = date || this.date;
+
 		var { whichRecurrence, remainder, containsDate } = this._calculateRecurrence(date);
 
 		if (!containsDate) {

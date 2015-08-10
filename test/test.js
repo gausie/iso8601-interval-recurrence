@@ -248,6 +248,21 @@ describe('IntervalRecurrence', function () {
 			var fails = weekend.currentRange(not_weekend);
 			assert.equal(fails, false);
 		});
+
+		it('should choose the current date if no date is supplied', function () {
+			var twelve_hours_ago = moment().subtract(12, 'hours');
+			var twelve_hours_hence = moment().add(12, 'hours');
+
+			var this_day = new IntervalRecurrence({
+				interval: twelve_hours_ago.toISOString() + '/P1D',
+				recurrence: 'R0'
+			});
+
+			var range = this_day.currentRange();
+
+			assert.equalTime(range.start, twelve_hours_ago.toDate());
+			assert.equalTime(range.end, twelve_hours_hence.toDate());
+		});
 	});
 
 });

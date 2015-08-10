@@ -1,6 +1,6 @@
 {
   "name": "iso8601-interval-recurrence",
-  "version": "3.4.1",
+  "version": "3.5.0",
   "description": "Library to check whether dates occur within recurring intervals specified using strict ISO8601.",
   "main": "./dist/index.js",
   "directories": {

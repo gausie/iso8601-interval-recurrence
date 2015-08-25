@@ -220,7 +220,6 @@ describe('IntervalRecurrence', function () {
 			assert.equal(between_midnight_and_midday.containsDate(before_midday), true);
 			assert.equal(between_midnight_and_midday.containsDate(after_midday),  false);
 		});
-
 	});
 
 	describe('#currentRange()', function () {
@@ -262,6 +261,21 @@ describe('IntervalRecurrence', function () {
 
 			assert.equalTime(range.start, twelve_hours_ago.toDate());
 			assert.equalTime(range.end, twelve_hours_hence.toDate());
+		});
+
+		it('should correctly parse months', function () {
+			var monthly = new IntervalRecurrence({
+				interval: '2015-01-01T00:00:00.000Z/P1M',
+				recurrence: 'R/P1M'
+			});
+
+			var first_jan = monthly.currentRange(new Date('2015-01-01T00:00:00.000Z'));
+			var first_feb = monthly.currentRange(new Date('2015-02-01T00:00:00.000Z'));
+			var first_mar = monthly.currentRange(new Date('2015-03-01T00:00:00.000Z'));
+
+			assert.equal(first_jan.recurrence, 0);
+			assert.equal(first_feb.recurrence, 1);
+			assert.equal(first_mar.recurrence, 2);
 		});
 	});
 

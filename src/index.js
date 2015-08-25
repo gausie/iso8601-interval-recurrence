@@ -61,16 +61,26 @@ export default class IntervalRecurrence {
 			return false;
 		}
 
+		var range = this._calculateRange(whichRecurrence);
+
+		// Return Javascript dates to maintain interoperability.
+		return {
+			start: range.start.toDate(),
+			end: range.end.toDate(),
+			recurrence: whichRecurrence
+		};
+	}
+
+	_calculateRange (whichRecurrence) {
 		var timeBeforeStart = moment.duration(this.recurrence.interval).asMilliseconds() * whichRecurrence;
 
 		// Note that we need to clone these moments because they are mutable.
 		var start = this.interval.date.clone().add(timeBeforeStart, 'milliseconds');
 		var end = start.clone().add(this.interval.interval);
 
-		// We return them as JavaScript Dates for library interoperability.
 		return {
-			start: start.toDate(),
-			end: end.toDate()
+			start: start,
+			end: end
 		};
 	}
 
@@ -79,17 +89,50 @@ export default class IntervalRecurrence {
 
 		// Calculate what recurrence we are in.
 		var difference = date.diff(this.interval.date);
-		var recurring_period = (this.recurrence.interval !== undefined) ? this.recurrence.interval.asMilliseconds() : 0;
+		var recurring_period;
+
+		if (this.recurrence.interval !== undefined) {
+			recurring_period = this.recurrence.interval.asMilliseconds();
+		} else {
+			recurring_period = 0;
+		}
 
 		if (recurring_period === 0) {
 			recurring_period = Infinity;
 		}
 
-		var whichRecurrence = Math.floor(difference / recurring_period);
+		var whichRecurrence;
+		var estimatedRecurrence = Math.floor(difference / recurring_period);
 		var remainder = difference % recurring_period;
 
-		var containsDate;
+		// If there is a month or year component to this recurrence, it will need double checking.
+		if (this.recurrence.interval && (this.recurrence.interval.months() > 0 || this.recurrence.interval.years() > 0)) {
+			let estimatedRange = this._calculateRange(whichRecurrence);
 
+			let totalDuration = moment.duration();
+			for(let x = 0; x < estimatedRecurrence; x++) {
+				totalDuration.add(this.recurrence.interval);
+			}
+
+			let repetitionStart = this.interval.date.clone().add(totalDuration);
+			let repetitionEnd = repetitionStart.clone().add(this.interval.interval);
+
+			let found = false;
+			for(let x = estimatedRecurrence; found === false; x++) {
+				if (date.isBetween(repetitionStart, repetitionEnd) || date.isSame(repetitionStart)) {
+					found = x;
+				} else {
+					repetitionStart.add(this.recurrence.interval);
+					repetitionEnd.add(this.recurrence.interval);
+				}
+			}
+
+			whichRecurrence = found;
+		} else {
+			whichRecurrence = estimatedRecurrence;
+		}
+
+		let containsDate;
 		if ( (whichRecurrence > this.recurrence.recurrence) ) {
 			// Check we're within allowed recurrences.
 			// An value of Infinity suggests that the recurrence interval is zero.
